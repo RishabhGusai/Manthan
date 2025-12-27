@@ -1,0 +1,104 @@
+.container {
+    padding: 1rem;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.adminBadge {
+    background: #FF0055;
+    color: white;
+    padding: 0.2rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.card {
+    background: rgba(20, 25, 40, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.alertCard {
+    background: rgba(255, 0, 85, 0.1);
+    border: 1px solid #FF0055;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.tableTitle {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: var(--primary-neon);
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.9rem;
+}
+
+.table th {
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.actionBtn {
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.8rem;
+    margin-right: 0.5rem;
+    transition: all 0.2s;
+}
+
+.btnApprove {
+    background: rgba(0, 255, 127, 0.15);
+    color: #00ff7f;
+}
+
+.btnApprove:hover {
+    background: rgba(0, 255, 127, 0.3);
+}
+
+.btnReject {
+    background: rgba(255, 77, 77, 0.15);
+    color: #ff4d4d;
+}
+
+.btnReject:hover {
+    background: rgba(255, 77, 77, 0.3);
+}
+
+.riskHigh {
+    color: #ff4d4d;
+    font-weight: bold;
+}
+
+.riskLow {
+    color: #00f2ff;
+}

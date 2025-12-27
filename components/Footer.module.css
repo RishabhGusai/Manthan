@@ -1,0 +1,48 @@
+.footer {
+    background-color: var(--text-dark);
+    color: var(--white);
+    padding: 4rem 0 0;
+    margin-top: auto;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 2rem;
+    padding-bottom: 3rem;
+}
+
+.brand h3 {
+    color: var(--primary-red);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.brand p {
+    color: #ccc;
+    max-width: 300px;
+}
+
+.column h4 {
+    margin-bottom: 1.2rem;
+    font-size: 1.1rem;
+}
+
+.column a {
+    display: block;
+    margin-bottom: 0.8rem;
+    color: #ccc;
+    transition: color 0.2s;
+}
+
+.column a:hover {
+    color: var(--white);
+}
+
+.copyright {
+    border-top: 1px solid #444;
+    padding: 1.5rem 0;
+    text-align: center;
+    color: #888;
+    font-size: 0.9rem;
+}

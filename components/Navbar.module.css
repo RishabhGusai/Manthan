@@ -1,0 +1,50 @@
+.navbar {
+    background-color: var(--white);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--primary-red);
+    text-decoration: none;
+}
+
+.manthan {
+    color: var(--primary-red);
+}
+
+.links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.link {
+    color: var(--text-dark);
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.link:hover {
+    color: var(--primary-red);
+}
+
+.loginBtn {
+    margin-right: 0.5rem;
+    padding: 0.5rem 1rem;
+}
+
+.registerBtn {
+    padding: 0.5rem 1rem;
+}

@@ -14,98 +14,63 @@
 }
 
 .statCard {
-    background: rgba(20, 25, 40, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
+    background: var(--glass-dark);
+    border: var(--glass-border);
+    backdrop-filter: blur(40px);
+    border-radius: 20px;
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    box-shadow: var(--glass-shadow);
+    transition: transform 0.3s;
+}
+
+.statCard:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary-accent);
 }
 
 .statValue {
     font-size: 1.8rem;
     font-weight: 700;
-    color: var(--primary-neon);
-}
-
-.statLabel {
-    color: var(--text-muted);
-    font-size: 0.9rem;
-}
-
-.section {
-    margin-bottom: 3rem;
+    color: var(--primary-accent);
+    font-family: 'Outfit', sans-serif;
 }
 
 .sectionTitle {
     font-size: 1.3rem;
     margin-bottom: 1.5rem;
-    border-left: 4px solid var(--primary-neon);
+    border-left: 4px solid var(--primary-accent);
     padding-left: 1rem;
     color: white;
-}
-
-.loanGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1.5rem;
-}
-
-.loanCard {
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 1.5rem;
-    transition: transform 0.2s;
+    font-family: 'Outfit', sans-serif;
 }
 
 .loanCard:hover {
     transform: translateY(-5px);
-    border-color: var(--primary-neon);
-}
-
-.bankLogo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 1rem;
-    font-weight: 600;
-    font-size: 1.1rem;
-}
-
-.loanDetails {
-    margin: 1rem 0;
-    font-size: 0.9rem;
-    color: var(--text-muted);
-}
-
-.detailRow {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 0.5rem;
+    border-color: var(--primary-accent);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
 .creditScoreCircle {
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    border: 8px solid #22c55e;
+    border: 8px solid var(--primary-accent);
+    background: rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     margin: 0 auto;
-    box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
-}
-
-.scoreVal {
-    font-size: 2.5rem;
-    font-weight: 800;
-    color: white;
+    box-shadow: 0 0 30px rgba(255, 130, 71, 0.2);
 }
 
 .scoreLabel {
-    color: #22c55e;
+    color: var(--primary-accent);
     font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
 }

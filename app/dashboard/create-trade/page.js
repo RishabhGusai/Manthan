@@ -61,7 +61,7 @@ export default function CreateTrade() {
             <div className={`animate-fade-in ${styles.container}`}>
                 <div className={styles.card}>
                     <h1 className={styles.title}>
-                        <PackagePlus color="var(--primary-neon)" size={32} /> Create New Trade
+                        <PackagePlus color="var(--neon-lime)" size={32} /> Create New Trade
                     </h1>
                     <p style={{ color: 'var(--text-muted)', marginBottom: '2rem' }}>
                         Define your product details, set terms, and invite an importer to start a verified trade.
@@ -118,7 +118,7 @@ export default function CreateTrade() {
                                     required
                                     onChange={handleChange}
                                 />
-                                <div style={{ marginTop: '0.5rem', fontSize: '0.9rem', color: '#4ade80' }}>
+                                <div style={{ marginTop: '0.5rem', fontSize: '0.9rem', color: 'var(--primary-accent)' }}>
                                     Total Value: ₹ {totalValue.toLocaleString()}
                                 </div>
                             </div>
@@ -233,12 +233,12 @@ export default function CreateTrade() {
                         <div style={{ textAlign: 'center' }}>
                             <div className="animate-float" style={{
                                 width: '100px', height: '100px', borderRadius: '50%',
-                                background: 'rgba(74, 222, 128, 0.2)',
+                                background: 'rgba(0, 242, 255, 0.2)',
                                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                                 margin: '0 auto 1.5rem',
-                                boxShadow: '0 0 30px rgba(74, 222, 128, 0.4)'
+                                boxShadow: '0 0 30px rgba(0, 242, 255, 0.4)'
                             }}>
-                                <CheckCircle size={50} color="#4ade80" />
+                                <CheckCircle size={50} color="var(--primary-accent)" />
                             </div>
                             <h2 style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>Trade Initiated!</h2>
                             <p style={{ color: 'var(--text-muted)', fontSize: '1.2rem' }}>Invite sent to importer. Redirecting...</p>

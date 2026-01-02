@@ -1,7 +1,6 @@
 import './globals.css';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
 import { GlobalProvider } from '../context/GlobalContext';
+import LayoutWrapper from '../components/LayoutWrapper';
 
 export const metadata = {
     title: 'Manthan - Trade Made Easy',
@@ -16,9 +15,9 @@ export default function RootLayout({ children }) {
             </head>
             <body>
                 <GlobalProvider>
-                    <Navbar />
-                    <main>{children}</main>
-                    <Footer />
+                    <LayoutWrapper>
+                        {children}
+                    </LayoutWrapper>
                 </GlobalProvider>
             </body>
         </html>

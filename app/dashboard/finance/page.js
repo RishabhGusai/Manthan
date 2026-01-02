@@ -78,7 +78,7 @@ export default function Finance() {
 
                         <div className={styles.loanCard}>
                             <div className={styles.bankLogo}>
-                                <Landmark color="#00f2ff" /> SBI Global
+                                <Landmark color="var(--neon-lime)" /> SBI Global
                             </div>
                             <h4>Pre-Shipment Credit</h4>
                             <div className={styles.loanDetails}>
@@ -146,7 +146,7 @@ export default function Finance() {
                                         </div>
                                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
                                             <span>Credit Score:</span>
-                                            <strong style={{ color: '#4ade80' }}>785 (Excellent)</strong>
+                                            <strong style={{ color: 'var(--primary-accent)' }}>785 (Excellent)</strong>
                                         </div>
                                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                             <span>Pre-Approved Limit:</span>
@@ -164,7 +164,7 @@ export default function Finance() {
                                 </>
                             ) : (
                                 <div style={{ textAlign: 'center', padding: '2rem 0' }}>
-                                    <CheckCircle size={64} color="#4ade80" style={{ marginBottom: '1rem' }} />
+                                    <CheckCircle size={64} color="var(--primary-accent)" style={{ marginBottom: '1rem' }} />
                                     <h2>Application Submitted!</h2>
                                     <p style={{ color: 'var(--text-muted)' }}>The lender will contact you shortly.</p>
                                 </div>

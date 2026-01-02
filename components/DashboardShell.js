@@ -33,25 +33,54 @@ export default function DashboardShell({ children }) {
     ];
 
     return (
-        <div style={{ display: 'flex', minHeight: '100vh', background: 'var(--bg-dark)' }}>
+        <div style={{
+            display: 'flex',
+            minHeight: '100vh',
+            position: 'relative',
+            overflow: 'hidden',
+            color: 'var(--text-main)',
+            fontFamily: 'Inter, sans-serif'
+        }}>
+            {/* Background Image Layer - Conditional */}
+            {/* Background Image Layer - Conditional */}
+            <div style={{
+                position: 'fixed',
+                top: 0, left: 0, right: 0, bottom: 0,
+                zIndex: 0,
+                background: 'radial-gradient(circle at top left, #1a202c, #0a0e17)',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+            }}>
+            </div>
+
             {/* Sidebar */}
             <aside style={{
-                width: '260px',
-                background: 'rgba(20, 25, 40, 0.95)',
+                width: '240px', // Widened for text
+                background: 'rgba(10, 15, 25, 0.6)',
+                backdropFilter: 'blur(20px)',
                 borderRight: '1px solid rgba(255,255,255,0.05)',
-                padding: '2rem 1.5rem',
+                padding: '2rem 1rem', // Added horizontal padding
                 display: 'flex',
                 flexDirection: 'column',
                 position: 'fixed',
                 height: '100vh',
-                zIndex: 100
+                zIndex: 100,
+                transition: 'all 0.3s ease'
             }}>
-                <div style={{ marginBottom: '3rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <img src="/logo.jpg" alt="Manthan Logo" style={{ height: '40px', objectFit: 'contain' }} />
-                    <span style={{ fontSize: '1.5rem', fontWeight: '800', fontFamily: 'Outfit, sans-serif' }}>Manthan</span>
-                </div>
+                <Link href="/" style={{ marginBottom: '3rem', paddingLeft: '1rem', display: 'flex', alignItems: 'center', gap: '1rem', textDecoration: 'none', color: 'inherit' }}>
+                    <div style={{
+                        width: '40px', height: '40px',
+                        borderRadius: '10px',
+                        background: 'linear-gradient(135deg, var(--primary-accent), var(--accent-secondary))',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        boxShadow: '0 0 15px rgba(0, 242, 255, 0.3)'
+                    }}>
+                        <span style={{ fontSize: '1.2rem', fontWeight: '800', color: '#000' }}>M</span>
+                    </div>
+                    <span style={{ fontSize: '1.2rem', fontWeight: 'bold', letterSpacing: '1px' }}>MANTHAN</span>
+                </Link>
 
-                <nav style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                <nav style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.5rem', width: '100%' }}>
                     {navItems.map((item) => {
                         const isActive = pathname === item.href;
                         return (
@@ -61,116 +90,112 @@ export default function DashboardShell({ children }) {
                                 style={{
                                     display: 'flex',
                                     alignItems: 'center',
-                                    gap: '1rem',
-                                    padding: '0.75rem 1rem',
+                                    gap: '1rem', // Space between icon and text
+                                    padding: '0.8rem 1rem',
                                     borderRadius: '12px',
-                                    color: isActive ? 'var(--bg-dark)' : 'var(--text-muted)',
-                                    background: isActive ? 'var(--primary-neon)' : 'transparent',
-                                    fontWeight: isActive ? 'bold' : 'normal',
+                                    color: isActive ? '#000' : 'var(--text-muted)',
+                                    background: isActive ? 'var(--primary-accent)' : 'transparent',
+                                    fontWeight: isActive ? '600' : '400',
                                     transition: 'all 0.2s',
                                     textDecoration: 'none'
                                 }}
                             >
-                                {item.icon}
-                                {item.name}
+                                {React.cloneElement(item.icon, {
+                                    size: 20,
+                                    color: isActive ? '#000' : 'currentColor'
+                                })}
+                                <span style={{ fontSize: '0.95rem' }}>{item.name}</span>
                             </Link>
                         );
                     })}
                 </nav>
 
-                <div style={{ marginTop: 'auto', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '1.5rem' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
-                        <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: '#333', backgroundImage: `url(${user?.avatar || ''})`, backgroundSize: 'cover' }} />
+                <div style={{ marginTop: 'auto', padding: '1rem', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                        <div style={{
+                            width: '35px', height: '35px',
+                            borderRadius: '50%',
+                            border: '2px solid var(--primary-accent)',
+                            backgroundImage: `url(${user?.avatar || '/images/dashboard.png'})`,
+                            backgroundSize: 'cover'
+                        }} />
                         <div>
-                            <div style={{ fontSize: '0.9rem', fontWeight: 'bold' }}>{user?.name || 'User'}</div>
-                            <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{user?.role || 'Role'}</div>
+                            <div style={{ fontSize: '0.9rem', fontWeight: 'bold' }}>John Doe</div>
+                            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Logistics Mgr</div>
                         </div>
                     </div>
                 </div>
             </aside>
 
             {/* Main Content */}
-            <main style={{ marginLeft: '260px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                {/* Header */}
+            <main style={{
+                marginLeft: '240px', // Updated margin
+                flex: 1,
+                display: 'flex',
+                flexDirection: 'column',
+                position: 'relative',
+                zIndex: 1
+            }}>
+                {/* Header - Transparent and floating */}
                 <header style={{
                     height: '80px',
-                    padding: '0 2rem',
+                    padding: '0 3rem',
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'space-between',
-                    borderBottom: '1px solid rgba(255,255,255,0.05)',
-                    background: 'rgba(10, 14, 23, 0.8)',
-                    backdropFilter: 'blur(10px)',
-                    position: 'sticky',
-                    top: 0,
-                    zIndex: 90
+                    justifyContent: 'flex-end',
+                    background: 'transparent',
                 }}>
-                    <div style={{ color: 'var(--text-muted)' }}>
-                        {new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
-                    </div>
+                    {/* Centered Top Widgets could go here, but keeping it simple for now */}
 
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
+                        {/* Weather/Location Pill (Simulated from image) */}
+                        <div className="glass-card" style={{
+                            padding: '0.5rem 1rem',
+                            display: 'flex', gap: '1rem',
+                            borderRadius: '50px',
+                            border: '1px solid rgba(255,255,255,0.1)',
+                            background: 'rgba(0,0,0,0.3)'
+                        }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem' }}>
+                                <span>📍 58.5000° N, 1.5000° E</span>
+                            </div>
+                            <div style={{ width: '1px', background: 'rgba(255,255,255,0.2)' }} />
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem' }}>
+                                <span>☁️ 24°C Clear</span>
+                            </div>
+                        </div>
+
                         <div style={{ position: 'relative', cursor: 'pointer' }} onClick={() => setShowNotifications(!showNotifications)}>
-                            <Bell size={24} color="var(--text-muted)" />
+                            <div style={{
+                                width: '40px', height: '40px',
+                                borderRadius: '12px',
+                                background: 'rgba(255,255,255,0.05)',
+                                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                backdropFilter: 'blur(5px)'
+                            }}>
+                                <Bell size={20} color="var(--primary-accent)" />
+                            </div>
                             {notifications.length > 0 && (
                                 <div style={{
                                     position: 'absolute', top: '-5px', right: '-5px',
                                     width: '10px', height: '10px',
-                                    background: 'var(--primary-neon)',
-                                    borderRadius: '50%'
+                                    background: '#ff4d4d',
+                                    borderRadius: '50%',
+                                    boxShadow: '0 0 10px #ff4d4d'
                                 }} />
-                            )}
-
-                            {/* Notifications Dropdown */}
-                            {showNotifications && (
-                                <div className="animate-fade-in" style={{
-                                    position: 'absolute',
-                                    top: '40px',
-                                    right: '-10px',
-                                    width: '320px',
-                                    background: 'var(--bg-dark)',
-                                    border: '1px solid rgba(255,255,255,0.1)',
-                                    borderRadius: '12px',
-                                    padding: '1rem',
-                                    boxShadow: '0 10px 40px rgba(0,0,0,0.5)',
-                                    zIndex: 100
-                                }} onClick={e => e.stopPropagation()}>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem', borderBottom: '1px solid #333', paddingBottom: '0.5rem' }}>
-                                        <h4 style={{ margin: 0 }}>Notifications</h4>
-                                        <X size={16} style={{ cursor: 'pointer' }} onClick={(e) => { e.stopPropagation(); setShowNotifications(false); }} />
-                                    </div>
-                                    <div style={{ maxHeight: '300px', overflowY: 'auto' }}>
-                                        {notifications.map(n => (
-                                            <div key={n.id} style={{ marginBottom: '1rem', paddingBottom: '1rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                                                <div style={{ fontWeight: 'bold', fontSize: '0.9rem', color: n.type === 'alert' ? '#ff4d4d' : 'var(--primary-neon)' }}>
-                                                    {n.title}
-                                                </div>
-                                                <div style={{ fontSize: '0.85rem', color: '#ccc', margin: '0.2rem 0' }}>
-                                                    {n.message}
-                                                </div>
-                                                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-                                                    {n.time}
-                                                </div>
-                                            </div>
-                                        ))}
-                                        {notifications.length === 0 && (
-                                            <div style={{ textAlign: 'center', color: 'var(--text-muted)' }}>No new notifications</div>
-                                        )}
-                                    </div>
-                                </div>
                             )}
                         </div>
                     </div>
                 </header>
 
                 {/* Page Content */}
-                <div style={{ padding: '2rem', flex: 1 }}>
+                <div style={{ padding: '0 3rem 3rem 3rem', flex: 1 }}>
                     {children}
                 </div>
             </main>
 
             {/* Global Chatbot */}
             <ChatWidget />
-        </div>
+        </div >
     );
 }

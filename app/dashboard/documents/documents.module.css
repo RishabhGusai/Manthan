@@ -1,0 +1,83 @@
+.container {
+    padding: 1rem;
+}
+
+.header {
+    margin-bottom: 2rem;
+}
+
+.title {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: white;
+    font-family: 'Outfit', sans-serif;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.docCard {
+    background: var(--glass-dark);
+    border: var(--glass-border);
+    backdrop-filter: blur(40px);
+    border-radius: 20px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    box-shadow: var(--glass-shadow);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.docCard:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary-accent);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.iconBox {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 130, 71, 0.1);
+    color: var(--primary-accent);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 130, 71, 0.2);
+}
+
+.statusPill {
+    padding: 0.25rem 0.75rem;
+    background: rgba(255, 130, 71, 0.1);
+    color: var(--primary-accent);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border: 1px solid rgba(255, 130, 71, 0.2);
+    box-shadow: 0 0 10px rgba(255, 130, 71, 0.1);
+}
+
+.docTitle {
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+    color: white;
+}
+
+.footer {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    gap: 0.5rem;
+}

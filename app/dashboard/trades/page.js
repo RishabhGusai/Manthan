@@ -58,7 +58,7 @@ export default function Trades() {
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                                     <span style={{
                                         padding: '0.25rem 0.8rem', borderRadius: '20px',
-                                        background: 'rgba(0, 242, 255, 0.1)', color: 'var(--primary-neon)', border: '1px solid rgba(0, 242, 255, 0.2)'
+                                        background: 'rgba(0, 242, 255, 0.1)', color: 'var(--primary-accent)', border: '1px solid rgba(0, 242, 255, 0.2)'
                                     }}>
                                         {shipment.status}
                                     </span>
@@ -78,7 +78,7 @@ export default function Trades() {
                             <div key={item.id} className={styles.marketCard}>
                                 <img src={item.img} alt={item.name} className={styles.cardImg} />
                                 <div className={styles.cardBody}>
-                                    <div style={{ fontSize: '0.8rem', color: 'var(--primary-neon)', textTransform: 'uppercase' }}>{item.category}</div>
+                                    <div style={{ fontSize: '0.8rem', color: 'var(--primary-accent)', textTransform: 'uppercase' }}>{item.category}</div>
                                     <div style={{ fontWeight: 'bold', fontSize: '1.1rem', margin: '0.2rem 0' }}>{item.name}</div>
                                     <div className={styles.priceTag}>{item.price}</div>
                                     <button className="btn btn-primary" style={{ width: '100%', marginTop: '0.5rem' }}>

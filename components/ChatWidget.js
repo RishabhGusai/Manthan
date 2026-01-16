@@ -19,6 +19,12 @@ export default function ChatWidget() {
         scrollToBottom();
     }, [messages, isTyping]);
 
+    // Initialize Gemini (Client-Side for Static Deployment)
+    // NOTE: In a real production app, use a proxy or server to hide the key.
+    // Since this is a demo/hackathon project hosted on GitHub Pages, we use it directly.
+    const { GoogleGenerativeAI } = require("@google/generative-ai");
+    const genAI = new GoogleGenerativeAI("AIzaSyBLjLJG9tuACWBAqK7tQehRt1RnjzCVSeo");
+
     const handleSend = async () => {
         if (!input.trim()) return;
 
@@ -28,24 +34,32 @@ export default function ChatWidget() {
         setIsTyping(true);
 
         try {
-            const res = await fetch('/api/chat', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: userMsg })
+            // Direct Client-Side Call
+            const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+            const chat = model.startChat({
+                history: [
+                    {
+                        role: "user",
+                        parts: [{
+                            text: `You are Manthan AI, an intelligent assistant for the "Manthan" Export-Import platform.
+                            Keep answers concise (max 3 sentences).`
+                        }]
+                    },
+                    {
+                        role: "model",
+                        parts: [{ text: "Hello! I am Manthan AI. How can I assist with your shipments or documentation today?" }]
+                    }
+                ]
             });
 
-            const data = await res.json();
+            const result = await chat.sendMessage(userMsg);
+            const response = await result.response;
+            const text = response.text();
 
-            if (data.text) {
-                // If there's a JSON block (for future features), we could parse it here
-                // For now, just show the text
-                const cleanText = data.text.split('||JSON||')[0].trim();
-                setMessages(prev => [...prev, { role: 'bot', text: cleanText }]);
-            } else {
-                setMessages(prev => [...prev, { role: 'bot', text: "I'm sorry, I couldn't reach the server." }]);
-            }
+            setMessages(prev => [...prev, { role: 'bot', text: text }]);
+
         } catch (error) {
-            console.error(error);
+            console.error("Gemini Error:", error);
             setMessages(prev => [...prev, { role: 'bot', text: "Connection error. Please try again." }]);
         } finally {
             setIsTyping(false);

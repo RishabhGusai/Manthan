@@ -90,11 +90,12 @@ export default function AIWizard() {
             <div className={styles.container}>
                 {/* Header & Toggle */}
                 <div className={styles.header}>
-                    <div>
-                        <h1 style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                            <Bot color="var(--primary-accent)" /> AI Document Intelligence
+                    <div className={styles.titleGroup}>
+                        <h1>
+                            <Bot color="var(--primary-accent)" fill="rgba(0, 242, 255, 0.2)" />
+                            AI Document Intelligence
                         </h1>
-                        <p style={{ color: 'var(--text-secondary)' }}>Analyze contracts or generate new shipping documents.</p>
+                        <p>Analyze contracts or generate new shipping documents.</p>
                     </div>
                     <div className={styles.modeToggle}>
                         <button
@@ -126,39 +127,40 @@ export default function AIWizard() {
                                 background: isDragging ? 'rgba(0, 242, 255, 0.1)' : undefined
                             }}
                         >
-                            {scanStatus === 'scanning' && <div className={styles.scanOverlay} />}
+                            {scanStatus === 'scanning' && (
+                                <>
+                                    <div className={styles.scanOverlay} />
+                                    <div className={styles.scanningUI}>
+                                        <div style={{ fontSize: '3rem', fontWeight: 'bold', color: 'var(--primary-accent)', marginBottom: '1rem', fontFamily: 'monospace' }}>
+                                            {scanProgress}%
+                                        </div>
+                                        <h3 className="animate-pulse">Scanning Document...</h3>
+                                        <div className={styles.progressContainer}>
+                                            <div className={styles.progressBar} style={{ width: `${scanProgress}%` }} />
+                                        </div>
+                                        <p style={{ color: 'rgba(255,255,255,0.6)' }}>Extracting clauses & detecting risks</p>
+                                    </div>
+                                </>
+                            )}
 
                             {scanStatus === 'idle' && (
                                 <>
-                                    <div style={{ padding: '1.5rem', background: 'rgba(255,255,255,0.05)', borderRadius: '50%', marginBottom: '1.5rem' }}>
-                                        <Upload size={40} color="var(--primary-accent)" />
+                                    <div className={styles.uploadIconWrapper}>
+                                        <Upload size={32} color="var(--primary-accent)" />
                                     </div>
-                                    <h3 style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>Drag & Drop Document</h3>
-                                    <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem' }}>Supports PDF, DOCX, JPG (OCR enabled)</p>
+                                    <h3 className={styles.uploadTitle}>Drag & Drop Document</h3>
+                                    <p className={styles.uploadSub}>Supports PDF, DOCX, JPG (OCR enabled)</p>
                                     <button className="btn btn-primary" onClick={startScanSimulation}>or Browse Files</button>
                                 </>
                             )}
 
-                            {scanStatus === 'scanning' && (
-                                <div style={{ textAlign: 'center', width: '100%' }}>
-                                    <div style={{ fontSize: '3rem', fontWeight: 'bold', color: 'var(--primary-accent)', marginBottom: '1rem', fontFamily: 'monospace' }}>
-                                        {scanProgress}%
-                                    </div>
-                                    <h3 className="animate-pulse">Scanning Document...</h3>
-                                    <div style={{ width: '60%', height: '4px', background: 'rgba(255,255,255,0.1)', margin: '1rem auto', borderRadius: '2px' }}>
-                                        <div style={{ width: `${scanProgress}%`, height: '100%', background: 'var(--primary-accent)', borderRadius: '2px' }} />
-                                    </div>
-                                    <p style={{ color: 'var(--text-secondary)' }}>Extracting clauses & detecting risks</p>
-                                </div>
-                            )}
-
                             {scanStatus === 'complete' && (
-                                <div style={{ textAlign: 'center' }}>
-                                    <div style={{ padding: '1.5rem', background: 'rgba(0, 242, 255, 0.1)', borderRadius: '50%', marginBottom: '1.5rem', display: 'inline-flex' }}>
-                                        <ShieldCheck size={50} color="var(--primary-accent)" />
+                                <div style={{ textAlign: 'center', zIndex: 2 }}>
+                                    <div className={styles.uploadIconWrapper} style={{ background: 'rgba(0, 242, 255, 0.1)', borderColor: 'var(--primary-accent)' }}>
+                                        <ShieldCheck size={40} color="var(--primary-accent)" />
                                     </div>
-                                    <h2>Scan Complete</h2>
-                                    <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem' }}>Analyzed 'Sales_Contract_v4.pdf'</p>
+                                    <h2 style={{ fontSize: '1.8rem', marginBottom: '0.5rem' }}>Scan Complete</h2>
+                                    <p style={{ color: 'rgba(255,255,255,0.6)', marginBottom: '2rem' }}>Analyzed 'Sales_Contract_v4.pdf'</p>
                                     <button className="btn btn-outline" onClick={() => { setScanStatus('idle'); setAnalysisResult(null); }}>Scan Another</button>
                                 </div>
                             )}
@@ -173,27 +175,27 @@ export default function AIWizard() {
                                             {analysisResult.score}
                                         </div>
                                         <div>
-                                            <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', textTransform: 'uppercase' }}>Compliance Score</div>
-                                            <div style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>High Compliance</div>
+                                            <div style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase', marginBottom: '4px' }}>Compliance Score</div>
+                                            <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#fff' }}>High Compliance</div>
                                         </div>
                                     </div>
 
                                     <div>
-                                        <h4 style={{ marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                            <AlertTriangle color="#ff4d4d" size={18} /> Detected Risks ({analysisResult.risks.length})
-                                        </h4>
+                                        <div className={styles.sectionHeader}>
+                                            <AlertTriangle color="#ff4d4d" size={16} /> Detected Risks ({analysisResult.risks.length})
+                                        </div>
                                         {analysisResult.risks.map((risk, i) => (
                                             <div key={i} className={styles.riskItem}>
                                                 <span>{risk.msg}</span>
-                                                <span style={{ fontSize: '0.8rem', color: '#ff4d4d', fontWeight: 'bold' }}>HIGH</span>
+                                                <span style={{ fontSize: '0.75rem', color: '#ff4d4d', fontWeight: 'bold', background: 'rgba(255, 77, 77, 0.1)', padding: '2px 8px', borderRadius: '4px' }}>HIGH</span>
                                             </div>
                                         ))}
                                     </div>
 
-                                    <div style={{ marginTop: '1rem' }}>
-                                        <h4 style={{ marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                            <Check color="var(--primary-accent)" size={18} /> Validated Clauses ({analysisResult.safe.length})
-                                        </h4>
+                                    <div>
+                                        <div className={styles.sectionHeader}>
+                                            <Check color="var(--primary-accent)" size={16} /> Validated Clauses ({analysisResult.safe.length})
+                                        </div>
                                         {analysisResult.safe.map((item, i) => (
                                             <div key={i} className={styles.safeItem}>
                                                 <span>{item.msg}</span>
@@ -202,9 +204,10 @@ export default function AIWizard() {
                                     </div>
                                 </>
                             ) : (
-                                <div style={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', opacity: 0.5 }}>
-                                    <FileSearch size={64} style={{ marginBottom: '1rem' }} />
+                                <div className={styles.emptyState}>
+                                    <FileSearch size={48} style={{ marginBottom: '1.5rem', opacity: 0.5 }} />
                                     <p>Waiting for document scan...</p>
+                                    <p style={{ fontSize: '0.85rem', marginTop: '0.5rem', opacity: 0.5 }}>Upload a document to view insights</p>
                                 </div>
                             )}
                         </div>
@@ -215,46 +218,66 @@ export default function AIWizard() {
                 {mode === 'generate' && (
                     <div className={styles.chatContainer}>
                         <div className={styles.chatBox}>
-                            <div style={{ flex: 1, padding: '1.5rem', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                            <div className={styles.chatHistory}>
                                 {messages.map((msg, idx) => (
-                                    <div key={idx} style={{
-                                        alignSelf: msg.role === 'user' ? 'flex-end' : 'flex-start',
-                                        maxWidth: '80%'
-                                    }}>
-                                        <div style={{
-                                            background: msg.role === 'user' ? 'rgba(0, 242, 255, 0.15)' : 'rgba(255,255,255,0.05)',
-                                            padding: '1rem',
-                                            borderRadius: '12px',
-                                            border: msg.role === 'user' ? '1px solid rgba(0, 242, 255, 0.3)' : '1px solid rgba(255,255,255,0.1)',
-                                            color: msg.role === 'user' ? 'var(--primary-accent)' : 'var(--text-main)'
-                                        }}>
-                                            {msg.text}
-                                        </div>
+                                    <div key={idx} className={`${styles.message} ${msg.role === 'user' ? styles.userMsg : styles.botMsg}`}>
+                                        {msg.text}
                                     </div>
                                 ))}
+                                <div ref={messagesEndRef} />
                             </div>
-                            <div style={{ padding: '1.5rem', background: 'rgba(0,0,0,0.2)' }}>
-                                <div style={{ display: 'flex', gap: '1rem' }}>
-                                    <input
-                                        type="text"
-                                        value={input}
-                                        onChange={e => setInput(e.target.value)}
-                                        onKeyPress={e => e.key === 'Enter' && handleSend()}
-                                        className={styles.input}
-                                        placeholder="Type instructions (e.g., 'Add force majeure clause')..."
-                                        style={{ flex: 1, padding: '1rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(0,0,0,0.3)', color: 'white' }}
-                                    />
-                                    <button className="btn btn-primary" onClick={handleSend}><Send size={20} /></button>
-                                </div>
+                            <div className={styles.inputArea}>
+                                <input
+                                    type="text"
+                                    value={input}
+                                    onChange={e => setInput(e.target.value)}
+                                    onKeyPress={e => e.key === 'Enter' && handleSend()}
+                                    className={styles.chatInput}
+                                    placeholder="Type instructions (e.g., 'Add force majeure clause')..."
+                                />
+                                <button className="btn btn-primary" onClick={handleSend}><Send size={20} /></button>
                             </div>
                         </div>
 
                         <div className={styles.previewBox}>
-                            <h2 style={{ textAlign: 'center', textTransform: 'uppercase', marginBottom: '2rem' }}>{docData.type}</h2>
-                            <p><strong>Exporter:</strong> {docData.exporter}</p>
-                            <p><strong>Consignee:</strong> [Pending Input]</p>
-                            <hr style={{ margin: '2rem 0' }} />
-                            <p style={{ textAlign: 'center', color: '#888' }}>[Document Preview Auto-Updates]</p>
+                            <h2 style={{ textAlign: 'center', textTransform: 'uppercase', marginBottom: '2rem', fontSize: '1.5rem' }}>{docData.type}</h2>
+
+                            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '2rem' }}>
+                                <div>
+                                    <strong>EXPORTER:</strong><br />
+                                    {docData.exporter}<br />
+                                    123 Business Park<br />
+                                    Mumbai, India
+                                </div>
+                                <div>
+                                    <strong>INVOICE NO:</strong> INV-2024-001<br />
+                                    <strong>DATE:</strong> {new Date().toLocaleDateString()}
+                                </div>
+                            </div>
+
+                            <p><strong>CONSIGNEE:</strong><br />[Pending Input]</p>
+
+                            <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '2rem', marginBottom: '2rem' }}>
+                                <thead style={{ borderBottom: '2px solid #000' }}>
+                                    <tr>
+                                        <th style={{ textAlign: 'left', padding: '8px' }}>Description</th>
+                                        <th style={{ textAlign: 'right', padding: '8px' }}>Qty</th>
+                                        <th style={{ textAlign: 'right', padding: '8px' }}>Unit Price</th>
+                                        <th style={{ textAlign: 'right', padding: '8px' }}>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style={{ padding: '8px' }}>Cotton T-Shirts (Style #402)</td>
+                                        <td style={{ textAlign: 'right', padding: '8px' }}>500</td>
+                                        <td style={{ textAlign: 'right', padding: '8px' }}>$12.00</td>
+                                        <td style={{ textAlign: 'right', padding: '8px' }}>$6,000.00</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <hr style={{ margin: '2rem 0', borderColor: '#eee' }} />
+                            <p style={{ textAlign: 'center', color: '#888', fontSize: '0.8rem', fontStyle: 'italic' }}>[Document Preview Auto-Updates]</p>
                         </div>
                     </div>
                 )}

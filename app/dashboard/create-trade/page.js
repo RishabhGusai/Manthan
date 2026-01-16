@@ -61,9 +61,9 @@ export default function CreateTrade() {
             <div className={`animate-fade-in ${styles.container}`}>
                 <div className={styles.card}>
                     <h1 className={styles.title}>
-                        <PackagePlus color="var(--neon-lime)" size={32} /> Create New Trade
+                        <PackagePlus color="var(--primary-accent)" size={32} /> Create New Trade
                     </h1>
-                    <p style={{ color: 'var(--text-muted)', marginBottom: '2rem' }}>
+                    <p className={styles.subtitle}>
                         Define your product details, set terms, and invite an importer to start a verified trade.
                     </p>
 
@@ -87,7 +87,7 @@ export default function CreateTrade() {
                             </div>
                             <div className={`${styles.formGroup} ${styles.fullWidth}`}>
                                 <label className={styles.label}>Description</label>
-                                <textarea className={styles.textarea} placeholder="Detailed specification of goods..."></textarea>
+                                <textarea className={styles.textarea} placeholder="Detailed specification of goods, quality standards, and packaging details..."></textarea>
                             </div>
                             <div className={styles.formGroup}>
                                 <label className={styles.label}>Quantity</label>
@@ -118,16 +118,19 @@ export default function CreateTrade() {
                                     required
                                     onChange={handleChange}
                                 />
-                                <div style={{ marginTop: '0.5rem', fontSize: '0.9rem', color: 'var(--primary-accent)' }}>
-                                    Total Value: ₹ {totalValue.toLocaleString()}
+                                <div style={{ marginTop: '0.8rem', fontSize: '0.9rem', color: 'var(--primary-accent)', fontWeight: 'bold' }}>
+                                    Target Value: ₹ {totalValue.toLocaleString()}
                                 </div>
                             </div>
                             <div className={`${styles.formGroup} ${styles.fullWidth}`}>
-                                <label className={styles.label}>Product Images / Catalog</label>
+                                <label className={styles.label}>Product Documentation / Catalog</label>
                                 <div className={styles.uploadBox}>
-                                    <Upload size={24} color="var(--text-muted)" />
-                                    <div style={{ marginTop: '0.5rem', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
-                                        Click or Drag to upload product images
+                                    <Upload size={32} color="var(--primary-accent)" style={{ opacity: 0.8 }} />
+                                    <div style={{ fontSize: '1rem', color: 'white' }}>
+                                        Drag & Drop files here or click to browse
+                                    </div>
+                                    <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+                                        Supports PDF, JPG, PNG (Max 10MB)
                                     </div>
                                 </div>
                             </div>
@@ -177,13 +180,18 @@ export default function CreateTrade() {
                         <h3 className={styles.sectionTitle}>3. Counterparty Invitation</h3>
                         <div className={styles.grid}>
                             <div className={`${styles.formGroup} ${styles.fullWidth}`}>
-                                <div style={{ background: 'rgba(255, 215, 0, 0.05)', padding: '1rem', borderRadius: '8px', marginBottom: '1rem', display: 'flex', gap: '10px', alignItems: 'center' }}>
-                                    <Users color="#ffd700" size={20} />
-                                    <span style={{ fontSize: '0.9rem', color: '#dedede' }}>Invite an importer to review this trade proposal. They will receive a secure link.</span>
+                                <div className={styles.infoBox}>
+                                    <Users color="#ffd700" size={24} style={{ marginTop: '3px' }} />
+                                    <div>
+                                        <strong style={{ color: '#ffd700', display: 'block', marginBottom: '4px' }}>Secure Invite Link</strong>
+                                        <span style={{ fontSize: '0.9rem', color: '#dedede', lineHeight: '1.4' }}>
+                                            An invite will be sent to the importer to review and digitally sign this trade proposal.
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                             <div className={styles.formGroup}>
-                                <label className={styles.label}>Importer Name</label>
+                                <label className={styles.label}>Importer Company Name</label>
                                 <input
                                     type="text"
                                     name="importerName"
@@ -193,12 +201,12 @@ export default function CreateTrade() {
                                 />
                             </div>
                             <div className={styles.formGroup}>
-                                <label className={styles.label}>Importer Email</label>
+                                <label className={styles.label}>Importer Email Address</label>
                                 <input
                                     type="email"
                                     name="importerEmail"
                                     className={styles.input}
-                                    placeholder="contact@importer.com"
+                                    placeholder="procurement@partner.com"
                                     required
                                     onChange={handleChange}
                                 />
@@ -206,16 +214,16 @@ export default function CreateTrade() {
                         </div>
 
                         <div className={styles.btnGroup}>
-                            <button type="button" className="btn btn-outline" style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                                <Save size={18} /> Save Draft
+                            <button type="button" className="btn btn-outline" style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '0.8rem 1.5rem' }}>
+                                <Save size={18} /> Save as Draft
                             </button>
                             <button
                                 type="submit"
                                 className="btn btn-primary"
                                 disabled={isLoading}
-                                style={{ display: 'flex', alignItems: 'center', gap: '5px', opacity: isLoading ? 0.7 : 1 }}
+                                style={{ display: 'flex', alignItems: 'center', gap: '8px', opacity: isLoading ? 0.7 : 1, padding: '0.8rem 2rem' }}
                             >
-                                <Send size={18} /> {isLoading ? 'Processing...' : 'Create & Invite'}
+                                <Send size={18} /> {isLoading ? 'Processing...' : 'Create Trade & Invite'}
                             </button>
                         </div>
                     </form>
@@ -223,25 +231,16 @@ export default function CreateTrade() {
 
                 {/* Success Overlay */}
                 {showSuccess && (
-                    <div style={{
-                        position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
-                        background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(8px)',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        zIndex: 2000,
-                        animation: 'fadeIn 0.3s ease-out'
-                    }}>
-                        <div style={{ textAlign: 'center' }}>
-                            <div className="animate-float" style={{
-                                width: '100px', height: '100px', borderRadius: '50%',
-                                background: 'rgba(0, 242, 255, 0.2)',
-                                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                margin: '0 auto 1.5rem',
-                                boxShadow: '0 0 30px rgba(0, 242, 255, 0.4)'
-                            }}>
-                                <CheckCircle size={50} color="var(--primary-accent)" />
+                    <div className={styles.successOverlay}>
+                        <div className={styles.successCard}>
+                            <div className={styles.successIcon}>
+                                <CheckCircle size={60} color="var(--primary-accent)" />
                             </div>
-                            <h2 style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>Trade Initiated!</h2>
-                            <p style={{ color: 'var(--text-muted)', fontSize: '1.2rem' }}>Invite sent to importer. Redirecting...</p>
+                            <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem', color: 'white' }}>Trade Initiated!</h2>
+                            <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem' }}>
+                                Your trade proposal has been created and the invite has been sent.
+                                <br />Redirecting to your Active Trades...
+                            </p>
                         </div>
                     </div>
                 )}

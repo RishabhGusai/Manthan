@@ -1,177 +1,336 @@
+/* Container */
 .container {
-    padding: 1rem;
+    padding: 1rem 2rem;
+    font-family: 'Inter', sans-serif;
+    color: var(--text-primary, #e0e0e0);
 }
 
+/* Tabs - Futuristic Pill Design */
 .tabs {
     display: flex;
     gap: 1rem;
-    margin-bottom: 2rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding-bottom: 1rem;
+    margin-bottom: 2.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 1.5rem;
 }
 
 .tabBtn {
-    background: transparent;
-    border: none;
-    color: var(--text-muted);
-    font-size: 1.1rem;
+    position: relative;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.95rem;
     cursor: pointer;
-    padding: 0.5rem 1.5rem;
-    border-radius: 50px;
-    transition: all 0.3s;
-    font-family: 'Outfit', sans-serif;
+    padding: 0.8rem 2rem;
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     font-weight: 500;
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+}
+
+.tabBtn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    transform: translateY(-2px);
 }
 
 .activeTab {
-    background: var(--primary-accent);
-    color: black;
+    background: rgba(0, 242, 255, 0.1);
+    border-color: var(--primary-accent, #00f2ff);
+    color: #fff;
+    box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
+    text-shadow: 0 0 10px rgba(0, 242, 255, 0.5);
+}
+
+/* Empty State */
+.emptyState {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: rgba(10, 10, 15, 0.4);
+    border-radius: 20px;
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+}
+
+/* Shipment Cards - Holographic Glass */
+.shipmentCard {
+    background: linear-gradient(145deg, rgba(20, 25, 35, 0.6), rgba(10, 12, 18, 0.8));
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(12px);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.shipmentCard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, var(--primary-accent), transparent);
+    opacity: 0.5;
+}
+
+.shipmentCard:hover {
+    transform: translateX(5px);
+    background: linear-gradient(145deg, rgba(25, 30, 45, 0.7), rgba(15, 18, 25, 0.9));
+    border-color: rgba(0, 242, 255, 0.3);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.shipmentId {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.1rem;
     font-weight: 700;
-    box-shadow: 0 0 15px rgba(0, 242, 255, 0.4);
+    color: #fff;
+    margin-bottom: 0.25rem;
+    letter-spacing: -0.5px;
+}
+
+.shipmentMeta {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.actionsGroup {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Status Pills */
+.statusPill {
+    padding: 0.4rem 1rem;
+    border-radius: 30px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    background: rgba(0, 242, 255, 0.05);
+    color: var(--primary-accent);
+    border: 1px solid rgba(0, 242, 255, 0.2);
+    box-shadow: 0 0 10px rgba(0, 242, 255, 0.1);
 }
 
 /* Marketplace Grid */
 .marketGrid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
+    gap: 2rem;
 }
 
 .marketCard {
-    background: var(--glass-dark);
-    border: var(--glass-border);
-    backdrop-filter: blur(40px);
+    background: rgba(15, 18, 25, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 20px;
     overflow: hidden;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: var(--glass-shadow);
+    backdrop-filter: blur(20px);
+    transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 .marketCard:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px);
     border-color: var(--primary-accent);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 15px 40px rgba(0, 242, 255, 0.15);
 }
 
 .cardImg {
     width: 100%;
-    height: 180px;
+    height: 200px;
     background: #0a0e17;
     object-fit: cover;
-    opacity: 0.9;
+    opacity: 0.85;
+    transition: opacity 0.3s;
+    mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+}
+
+.marketCard:hover .cardImg {
+    opacity: 1;
 }
 
 .cardBody {
     padding: 1.5rem;
 }
 
-.priceTag {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: var(--primary-accent);
-    margin: 0.5rem 0;
-    font-family: 'Outfit', sans-serif;
+.categoryTag {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+    display: block;
 }
 
-/* Modal Styles */
+.itemName {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #fff;
+}
+
+.priceTag {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-accent);
+    margin: 1rem 0;
+    font-family: 'Space Mono', monospace;
+    text-shadow: 0 0 15px rgba(0, 242, 255, 0.3);
+}
+
+/* Modal Styling (Tracking & Insurance) */
 .modalOverlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(10px);
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    z-index: 2000;
+    animation: fadeIn 0.3s ease-out;
 }
 
 .modalContent {
-    background: #0f172a;
+    background: rgba(15, 20, 30, 0.95);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 24px;
     width: 90%;
-    max-width: 800px;
+    max-width: 850px;
     max-height: 90vh;
     overflow-y: auto;
     position: relative;
-    box-shadow: 0 0 50px rgba(0, 0, 0, 0.7);
-    animation: slideUp 0.3s ease-out;
+    box-shadow: 0 0 80px rgba(0, 0, 0, 0.6);
+    animation: zoomIn 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
 
-@keyframes slideUp {
+@keyframes zoomIn {
     from {
         opacity: 0;
-        transform: translateY(50px);
+        transform: scale(0.95) translateY(20px);
     }
 
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: scale(1) translateY(0);
     }
 }
 
-/* IoT Graphs */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Map & IoT Visuals */
+.trackingMapContainer {
+    width: 100%;
+    height: 350px;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.telemetryOverlay {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(0, 10, 20, 0.85);
+    backdrop-filter: blur(12px);
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 242, 255, 0.3);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--primary-accent);
+}
+
 .iotGrid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    margin-top: 1rem;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
 }
 
 .graphCard {
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 12px;
-    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 16px;
+    padding: 1.5rem;
     border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .graphBar {
-    height: 100px;
+    height: 120px;
     display: flex;
     align-items: flex-end;
-    gap: 5px;
-    margin-top: 10px;
+    gap: 8px;
+    margin-top: 15px;
+    padding-bottom: 5 px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .bar {
     flex: 1;
-    background: var(--primary-accent);
-    opacity: 0.7;
-    transition: height 0.5s;
-    border-radius: 2px 2px 0 0;
+    background: linear-gradient(to top, rgba(0, 242, 255, 0.4), var(--primary-accent));
+    opacity: 0.8;
+    transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 4px 4px 0 0;
+    box-shadow: 0 0 10px rgba(0, 242, 255, 0.2);
 }
 
-/* Insurance */
+/* Insurance Form */
 .guidelines {
     background: rgba(255, 215, 0, 0.05);
-    border: 1px solid rgba(255, 215, 0, 0.2);
-    padding: 1rem;
-    border-radius: 8px;
-    margin-bottom: 1.5rem;
+    border: 1px dashed rgba(255, 215, 0, 0.3);
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
     color: #dedede;
-    font-size: 0.95rem;
-}
-
-.formGroup {
-    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 .formLabel {
     display: block;
-    margin-bottom: 0.5rem;
-    color: var(--text-muted);
+    margin-bottom: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    font-weight: 500;
 }
 
 .formInput {
     width: 100%;
-    padding: 1rem;
-    background: rgba(0, 0, 0, 0.2);
+    padding: 1rem 1.2rem;
+    background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
     color: white;
     font-size: 1rem;
     outline: none;
+    transition: all 0.3s;
+}
+
+.formInput:focus {
+    border-color: var(--primary-accent);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 0 4px rgba(0, 242, 255, 0.05);
 }

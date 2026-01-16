@@ -22,7 +22,7 @@ export default function Trades() {
     return (
         <DashboardShell>
             <div className={styles.container}>
-                <h1 style={{ marginBottom: '1.5rem' }}>My Trades & Logistics</h1>
+                <h1 style={{ marginBottom: '1.5rem', fontWeight: 600, fontSize: '1.8rem' }}>My Trades & Logistics</h1>
 
                 {/* Tabs */}
                 <div className={styles.tabs}>
@@ -43,34 +43,37 @@ export default function Trades() {
                 {/* Content */}
                 {activeTab === 'active' ? (
                     <div>
-                        {activeTab === 'active' && trades.length === 0 && (
-                            <div style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-muted)' }}>
-                                <Package size={48} style={{ opacity: 0.5, marginBottom: '1rem' }} />
-                                <p>No active shipments found. Create a trade to get started.</p>
+                        {activeTab === 'active' && trades.length === 0 ? (
+                            <div className={styles.emptyState}>
+                                <Package size={64} style={{ opacity: 0.3, marginBottom: '1.5rem', color: 'var(--primary-accent)' }} />
+                                <h3 style={{ fontSize: '1.2rem', marginBottom: '0.5rem' }}>No Active Shipments</h3>
+                                <p style={{ color: 'rgba(255,255,255,0.5)' }}>Create a new trade or visit the marketplace to get started.</p>
                             </div>
+                        ) : (
+                            trades.map(shipment => (
+                                <div key={shipment.id} className={styles.shipmentCard}>
+                                    <div>
+                                        <div className={styles.shipmentId}>{shipment.id}</div>
+                                        <div className={styles.shipmentMeta}>
+                                            <span style={{ color: 'var(--primary-accent)' }}>{shipment.product}</span>
+                                            <span>•</span>
+                                            <span>{shipment.destination || shipment.dest}</span>
+                                        </div>
+                                    </div>
+                                    <div className={styles.actionsGroup}>
+                                        <span className={styles.statusPill}>
+                                            {shipment.status}
+                                        </span>
+                                        <button className="btn btn-outline" onClick={() => setShowTracking(shipment.id)}>
+                                            <MapPin size={18} style={{ marginRight: '8px' }} /> Track
+                                        </button>
+                                        <button className="btn btn-outline" onClick={() => setShowInsurance(shipment.id)}>
+                                            <ShieldCheck size={18} style={{ marginRight: '8px' }} /> Insurance
+                                        </button>
+                                    </div>
+                                </div>
+                            ))
                         )}
-                        {trades.map(shipment => (
-                            <div key={shipment.id} className="glass-card" style={{ marginBottom: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                <div>
-                                    <div style={{ fontWeight: 'bold', fontSize: '1.1rem' }}>{shipment.id}</div>
-                                    <div style={{ color: 'var(--text-muted)' }}>{shipment.product} • {shipment.destination || shipment.dest}</div>
-                                </div>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                                    <span style={{
-                                        padding: '0.25rem 0.8rem', borderRadius: '20px',
-                                        background: 'rgba(0, 242, 255, 0.1)', color: 'var(--primary-accent)', border: '1px solid rgba(0, 242, 255, 0.2)'
-                                    }}>
-                                        {shipment.status}
-                                    </span>
-                                    <button className="btn btn-outline" onClick={() => setShowTracking(shipment.id)}>
-                                        <MapPin size={18} style={{ marginRight: '5px' }} /> Track
-                                    </button>
-                                    <button className="btn btn-outline" onClick={() => setShowInsurance(shipment.id)}>
-                                        <ShieldCheck size={18} style={{ marginRight: '5px' }} /> Insurance
-                                    </button>
-                                </div>
-                            </div>
-                        ))}
                     </div>
                 ) : (
                     <div className={styles.marketGrid}>
@@ -78,11 +81,11 @@ export default function Trades() {
                             <div key={item.id} className={styles.marketCard}>
                                 <img src={item.img} alt={item.name} className={styles.cardImg} />
                                 <div className={styles.cardBody}>
-                                    <div style={{ fontSize: '0.8rem', color: 'var(--primary-accent)', textTransform: 'uppercase' }}>{item.category}</div>
-                                    <div style={{ fontWeight: 'bold', fontSize: '1.1rem', margin: '0.2rem 0' }}>{item.name}</div>
+                                    <span className={styles.categoryTag}>{item.category}</span>
+                                    <div className={styles.itemName}>{item.name}</div>
                                     <div className={styles.priceTag}>{item.price}</div>
-                                    <button className="btn btn-primary" style={{ width: '100%', marginTop: '0.5rem' }}>
-                                        <ShoppingCart size={16} style={{ marginRight: '5px' }} /> Buy Now
+                                    <button className="btn btn-primary" style={{ width: '100%', marginTop: '0.5rem', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px' }}>
+                                        <ShoppingCart size={18} /> Buy Now
                                     </button>
                                 </div>
                             </div>
@@ -94,43 +97,60 @@ export default function Trades() {
                 {showTracking && (
                     <div className={styles.modalOverlay} onClick={() => setShowTracking(null)}>
                         <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
-                            <div style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-                                <h2>Live Tracking: {showTracking}</h2>
+                            <div style={{ padding: '2rem', borderBottom: '1px solid rgba(255,255,255,0.05)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <div>
+                                    <h2 style={{ fontSize: '1.5rem' }}>Live Tracking</h2>
+                                    <p style={{ color: 'rgba(255,255,255,0.5)', marginTop: '5px' }}>Shipment ID: {showTracking}</p>
+                                </div>
+                                <div className={styles.statusPill}>In Transit</div>
                             </div>
-                            <div style={{ padding: '1.5rem' }}>
-                                <div style={{ width: '100%', height: '300px', borderRadius: '8px', overflow: 'hidden', position: 'relative' }}>
+
+                            <div style={{ padding: '2rem' }}>
+                                <div className={styles.trackingMapContainer}>
                                     {/* Visual Map Fallback or Image */}
-                                    <img src="/images/map_tracking.png" alt="Tracking Map" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                                    <div style={{ position: 'absolute', top: '20px', right: '20px', background: 'rgba(0,0,0,0.7)', padding: '1rem', borderRadius: '8px', border: '1px solid var(--primary-neon)' }}>
-                                        <div>Speed: 24 Knots</div>
-                                        <div>Lat: 34.5° N</div>
-                                        <div>Long: 135.2° E</div>
+                                    <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1000&q=80" alt="Tracking Map" style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(60%) contrast(1.2)' }} />
+                                    <div className={styles.telemetryOverlay}>
+                                        <div>SPEED: 24 KNOTS</div>
+                                        <div>LAT: 34.5403° N</div>
+                                        <div>LNG: 135.2104° E</div>
+                                        <div style={{ marginTop: '0.5rem', fontSize: '0.7rem', opacity: 0.7 }}>UPDATED: 2 MINS AGO</div>
                                     </div>
                                 </div>
 
-                                <h3 style={{ marginTop: '2rem', marginBottom: '1rem' }}>IoT Sensor Data</h3>
+                                <h3 style={{ marginTop: '2.5rem', marginBottom: '1.5rem', fontSize: '1.2rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                    <Zap size={20} color="var(--primary-accent)" /> IoT Sensor Data
+                                </h3>
+
                                 <div className={styles.iotGrid}>
                                     <div className={styles.graphCard}>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><Thermometer color="#ff4d4d" /> Container Temperature</div>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                                            <Thermometer size={18} color="#ff4d4d" /> Container Temperature
+                                        </div>
                                         <div className={styles.graphBar}>
                                             <div className={styles.bar} style={{ height: '40%' }}></div>
                                             <div className={styles.bar} style={{ height: '60%' }}></div>
                                             <div className={styles.bar} style={{ height: '55%' }}></div>
                                             <div className={styles.bar} style={{ height: '45%' }}></div>
                                             <div className={styles.bar} style={{ height: '50%' }}></div>
+                                            <div className={styles.bar} style={{ height: '48%' }}></div>
+                                            <div className={styles.bar} style={{ height: '52%' }}></div>
                                         </div>
-                                        <div style={{ textAlign: 'right', fontSize: '0.8rem', color: '#aaa', marginTop: '5px' }}>Avg: 24°C</div>
+                                        <div style={{ textAlign: 'right', fontSize: '0.8rem', color: 'rgba(255,255,255,0.5)', marginTop: '10px' }}>Avg: 24°C</div>
                                     </div>
                                     <div className={styles.graphCard}>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><Zap color="#ffd700" /> Shock/Vibration</div>
-                                        <div className={styles.graphBar}>
-                                            <div className={styles.bar} style={{ height: '10%', background: '#ffd700' }}></div>
-                                            <div className={styles.bar} style={{ height: '15%', background: '#ffd700' }}></div>
-                                            <div className={styles.bar} style={{ height: '80%', background: '#ff4d4d' }}></div> {/* Spookt */}
-                                            <div className={styles.bar} style={{ height: '12%', background: '#ffd700' }}></div>
-                                            <div className={styles.bar} style={{ height: '10%', background: '#ffd700' }}></div>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                                            <Zap size={18} color="#ffd700" /> Shock/Vibration
                                         </div>
-                                        <div style={{ textAlign: 'right', fontSize: '0.8rem', color: '#aaa', marginTop: '5px' }}>Alert: High Impact Detected!</div>
+                                        <div className={styles.graphBar}>
+                                            <div className={styles.bar} style={{ height: '10%', background: '#ffd700', boxShadow: 'none' }}></div>
+                                            <div className={styles.bar} style={{ height: '15%', background: '#ffd700', boxShadow: 'none' }}></div>
+                                            <div className={styles.bar} style={{ height: '80%', background: '#ff4d4d', boxShadow: '0 0 10px #ff4d4d' }}></div>
+                                            <div className={styles.bar} style={{ height: '12%', background: '#ffd700', boxShadow: 'none' }}></div>
+                                            <div className={styles.bar} style={{ height: '10%', background: '#ffd700', boxShadow: 'none' }}></div>
+                                            <div className={styles.bar} style={{ height: '8%', background: '#ffd700', boxShadow: 'none' }}></div>
+                                            <div className={styles.bar} style={{ height: '5%', background: '#ffd700', boxShadow: 'none' }}></div>
+                                        </div>
+                                        <div style={{ textAlign: 'right', fontSize: '0.8rem', color: '#ff4d4d', marginTop: '10px', fontWeight: 'bold' }}>Alert: High Impact Detected!</div>
                                     </div>
                                 </div>
                             </div>
@@ -142,14 +162,16 @@ export default function Trades() {
                 {showInsurance && (
                     <div className={styles.modalOverlay} onClick={() => setShowInsurance(null)}>
                         <div className={styles.modalContent} style={{ maxWidth: '600px' }} onClick={e => e.stopPropagation()}>
-                            <div style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-                                <h2>File Insurance Claim</h2>
-                                <p style={{ color: 'var(--text-muted)' }}>Shipment: {showInsurance}</p>
+                            <div style={{ padding: '2rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                                <h2 style={{ fontSize: '1.5rem' }}>File Insurance Claim</h2>
+                                <p style={{ color: 'rgba(255,255,255,0.5)', marginTop: '5px' }}>Shipment: {showInsurance}</p>
                             </div>
-                            <div style={{ padding: '1.5rem' }}>
+                            <div style={{ padding: '2rem' }}>
                                 <div className={styles.guidelines}>
-                                    <strong><ShieldCheck size={16} style={{ display: 'inline' }} /> Claim Guidelines:</strong>
-                                    <ul style={{ paddingLeft: '1.5rem', marginTop: '0.5rem', fontSize: '0.9rem' }}>
+                                    <strong style={{ color: '#ffd700', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                        <ShieldCheck size={18} /> CLAIM GUIDELINES
+                                    </strong>
+                                    <ul style={{ paddingLeft: '1.5rem', marginTop: '0.5rem', fontSize: '0.9rem', opacity: 0.8 }}>
                                         <li>Claims must be filed within 48 hours of incident.</li>
                                         <li>Photos of damage are mandatory for processing.</li>
                                         <li>Standard deductible is ₹10,000 for standard containers.</li>
@@ -175,10 +197,10 @@ export default function Trades() {
                                 </div>
                                 <div className={styles.formGroup}>
                                     <label className={styles.formLabel}>Description</label>
-                                    <textarea rows="4" className={styles.formInput} placeholder="Describe what happened..."></textarea>
+                                    <textarea rows="4" className={styles.formInput} placeholder="Describe what happened detailedly..."></textarea>
                                 </div>
 
-                                <button className="btn btn-primary" style={{ width: '100%' }} onClick={() => { alert('Claim Filed Successfully!'); setShowInsurance(null); }}>
+                                <button className="btn btn-primary" style={{ width: '100%', marginTop: '1rem', padding: '1rem' }} onClick={() => { alert('Claim Filed Successfully!'); setShowInsurance(null); }}>
                                     Submit Claim
                                 </button>
                             </div>

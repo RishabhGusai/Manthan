@@ -1,6 +1,6 @@
 .container {
-    padding: 1rem;
-    max-width: 800px;
+    padding: 0;
+    max-width: 900px;
     margin: 0 auto;
 }
 
@@ -8,31 +8,66 @@
     background: var(--glass-dark);
     border: var(--glass-border);
     backdrop-filter: blur(40px);
-    border-radius: 16px;
-    padding: 2rem;
+    -webkit-backdrop-filter: blur(40px);
+    border-radius: 20px;
+    padding: 2.5rem;
     animation: fadeIn 0.5s ease-out;
-    box-shadow: var(--glass-shadow);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-accent), var(--accent-purple));
+    opacity: 0.8;
 }
 
 .title {
-    font-size: 1.8rem;
-    margin-bottom: 2rem;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
     display: flex;
     align-items: center;
-    gap: 10px;
-    color: white;
-    font-family: 'Outfit', sans-serif;
+    gap: 15px;
+    background: linear-gradient(to right, #fff, #a5b4fc);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.02em;
+}
+
+.subtitle {
+    color: var(--text-muted);
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    font-size: 1rem;
 }
 
 .sectionTitle {
     color: var(--primary-accent);
     font-size: 1.1rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
     margin-bottom: 1.5rem;
     margin-top: 1.5rem;
-    font-family: 'Outfit', sans-serif;
-    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sectionTitle::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, rgba(0, 242, 255, 0.2), transparent);
 }
 
 .grid {
@@ -42,67 +77,85 @@
 }
 
 .formGroup {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
+    position: relative;
 }
 
 .label {
     display: block;
-    color: var(--text-muted);
-    margin-bottom: 0.5rem;
-    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.6rem;
+    font-size: 0.85rem;
     font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 .input {
     width: 100%;
-    padding: 1rem;
-    background: rgba(0, 0, 0, 0.2);
+    padding: 0.8rem 1rem;
+    background: rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
     color: white;
     font-size: 1rem;
     outline: none;
-    transition: all 0.3s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.input:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
 .input:focus {
     border-color: var(--primary-accent);
     background: rgba(0, 242, 255, 0.05);
-    box-shadow: 0 0 15px rgba(0, 242, 255, 0.1);
+    box-shadow: 0 0 20px rgba(0, 242, 255, 0.15);
+    transform: translateY(-2px);
 }
 
 .textarea {
     width: 100%;
     padding: 1rem;
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
     color: white;
     font-size: 1rem;
     outline: none;
     resize: vertical;
-    min-height: 100px;
+    min-height: 120px;
     transition: all 0.3s;
+    font-family: inherit;
 }
 
 .textarea:focus {
     border-color: var(--primary-accent);
     background: rgba(0, 242, 255, 0.05);
+    box-shadow: 0 0 20px rgba(0, 242, 255, 0.15);
 }
 
 .uploadBox {
-    border: 2px dashed rgba(255, 255, 255, 0.2);
-    border-radius: 12px;
-    padding: 2rem;
+    border: 2px dashed rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 3rem;
     text-align: center;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.3s;
     background: rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
 }
 
 .uploadBox:hover {
     border-color: var(--primary-accent);
-    background: rgba(0, 242, 255, 0.05);
+    background: rgba(0, 242, 255, 0.08);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
 }
 
 .fullWidth {
@@ -112,6 +165,80 @@
 .btnGroup {
     display: flex;
     justify-content: flex-end;
-    gap: 1rem;
-    margin-top: 2rem;
+    gap: 1.5rem;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.infoBox {
+    background: rgba(255, 215, 0, 0.05);
+    padding: 1.2rem;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+    border: 1px solid rgba(255, 215, 0, 0.1);
+}
+
+.successOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.successCard {
+    text-align: center;
+    background: var(--glass-dark);
+    padding: 4rem;
+    border-radius: 30px;
+    border: 1px solid rgba(0, 242, 255, 0.3);
+    box-shadow: 0 0 50px rgba(0, 242, 255, 0.2);
+    max-width: 500px;
+    width: 90%;
+}
+
+.successIcon {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: rgba(0, 242, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 2rem;
+    box-shadow: 0 0 30px rgba(0, 242, 255, 0.3);
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .fullWidth {
+        grid-column: span 1;
+    }
 }

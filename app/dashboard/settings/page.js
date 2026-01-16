@@ -18,11 +18,11 @@ export default function SettingsPage() {
                     <div className={styles.section}>
                         <div className={styles.sectionHeader}>
                             <div className={styles.iconBox}>
-                                <User size={24} />
+                                <User size={26} />
                             </div>
                             <div>
-                                <h2 className={styles.sectionTitle}>Profile Settings</h2>
-                                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Update your personal information</p>
+                                <h2 className={styles.sectionTitle}>Profile Configuration</h2>
+                                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Update your personal identity and contact info.</p>
                             </div>
                         </div>
 
@@ -35,6 +35,14 @@ export default function SettingsPage() {
                                 <label className={styles.label}>Email Address</label>
                                 <input type="email" defaultValue="john@example.com" className={styles.input} />
                             </div>
+                            <div className={styles.formGroup}>
+                                <label className={styles.label}>Role / Position</label>
+                                <input type="text" defaultValue="Senior Logistics Manager" className={styles.input} />
+                            </div>
+                            <div className={styles.formGroup}>
+                                <label className={styles.label}>Company ID</label>
+                                <input type="text" defaultValue="MNTH-8832-X" className={styles.input} disabled style={{ opacity: 0.6, cursor: 'not-allowed' }} />
+                            </div>
                         </div>
                     </div>
 
@@ -42,16 +50,16 @@ export default function SettingsPage() {
                     <div className={styles.section}>
                         <div className={styles.sectionHeader}>
                             <div className={styles.iconBox}>
-                                <Bell size={24} />
+                                <Bell size={26} />
                             </div>
                             <div>
-                                <h2 className={styles.sectionTitle}>Notifications</h2>
-                                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Configure how you receive alerts</p>
+                                <h2 className={styles.sectionTitle}>Notifications Center</h2>
+                                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Configure how you receive critical alerts.</p>
                             </div>
                         </div>
 
                         <div className={styles.checkboxGroup}>
-                            {['Email Notifications', 'Push Notifications', 'Weekly Reports'].map((item) => (
+                            {['Email Notifications', 'Push Notifications', 'Weekly Analytics Reports', 'High Priority Alerts Only'].map((item) => (
                                 <label key={item} className={styles.checkboxLabel}>
                                     <input type="checkbox" defaultChecked className={styles.checkbox} />
                                     <span>{item}</span>
@@ -64,17 +72,22 @@ export default function SettingsPage() {
                     <div className={styles.section}>
                         <div className={styles.sectionHeader}>
                             <div className={styles.iconBox}>
-                                <Shield size={24} />
+                                <Shield size={26} />
                             </div>
                             <div>
-                                <h2 className={styles.sectionTitle}>Security</h2>
-                                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Protect your account</p>
+                                <h2 className={styles.sectionTitle}>Security & Access</h2>
+                                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Protect your account with 2FA and encryption.</p>
                             </div>
                         </div>
 
-                        <button className={styles.btnAction}>
-                            Change Password
-                        </button>
+                        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                            <button className={styles.btnAction}>
+                                <Key size={18} /> Change Password
+                            </button>
+                            <button className={styles.btnAction} style={{ background: 'transparent', border: '1px solid var(--primary-accent)', color: 'white' }}>
+                                <Shield size={18} /> Enable 2FA
+                            </button>
+                        </div>
                     </div>
 
                 </div>

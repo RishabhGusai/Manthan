@@ -8,6 +8,7 @@ export default function ChatWidget() {
         { role: 'bot', text: 'Hello! I am Manthan AI. How can I help you with your trade today?' }
     ]);
     const [input, setInput] = useState('');
+    const [isTyping, setIsTyping] = useState(false);
     const messagesEndRef = useRef(null);
 
     const scrollToBottom = () => {
@@ -16,27 +17,39 @@ export default function ChatWidget() {
 
     useEffect(() => {
         scrollToBottom();
-    }, [messages]);
+    }, [messages, isTyping]);
 
-    const handleSend = () => {
+    const handleSend = async () => {
         if (!input.trim()) return;
 
-        // User message
-        setMessages(prev => [...prev, { role: 'user', text: input }]);
-        const userQuery = input;
+        const userMsg = input;
+        setMessages(prev => [...prev, { role: 'user', text: userMsg }]);
         setInput('');
+        setIsTyping(true);
 
-        // Mock AI Response
-        setTimeout(() => {
-            let response = "I can help you with that. Please verify your documents in the 'Compliance' section.";
-            if (userQuery.toLowerCase().includes('invoice')) {
-                response = "To generate an invoice, go to the AI Documentation Wizard. Would you like me to take you there?";
-            } else if (userQuery.toLowerCase().includes('status')) {
-                response = "Your latest shipment #8832 is currently In Transit and expected to arrive in 4 hours.";
+        try {
+            const res = await fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: userMsg })
+            });
+
+            const data = await res.json();
+
+            if (data.text) {
+                // If there's a JSON block (for future features), we could parse it here
+                // For now, just show the text
+                const cleanText = data.text.split('||JSON||')[0].trim();
+                setMessages(prev => [...prev, { role: 'bot', text: cleanText }]);
+            } else {
+                setMessages(prev => [...prev, { role: 'bot', text: "I'm sorry, I couldn't reach the server." }]);
             }
-
-            setMessages(prev => [...prev, { role: 'bot', text: response }]);
-        }, 1000);
+        } catch (error) {
+            console.error(error);
+            setMessages(prev => [...prev, { role: 'bot', text: "Connection error. Please try again." }]);
+        } finally {
+            setIsTyping(false);
+        }
     };
 
     return (
@@ -86,6 +99,20 @@ export default function ChatWidget() {
                                 {msg.text}
                             </div>
                         ))}
+                        {isTyping && (
+                            <div style={{
+                                alignSelf: 'flex-start',
+                                background: 'rgba(255,255,255,0.1)',
+                                padding: '0.8rem',
+                                borderRadius: '12px',
+                                maxWidth: '80%',
+                                fontSize: '0.9rem',
+                                fontStyle: 'italic',
+                                color: 'var(--text-muted)'
+                            }}>
+                                Manthan is thinking...
+                            </div>
+                        )}
                         <div ref={messagesEndRef} />
                     </div>
 

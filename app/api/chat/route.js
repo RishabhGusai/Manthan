@@ -9,39 +9,34 @@ export async function POST(req) {
     try {
         const { message, currentDocData } = await req.json();
 
-        const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
+        // Use the modern 'gemini-1.5-flash' or 'gemini-pro' model
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
         const chat = model.startChat({
             history: [
                 {
                     role: "user",
                     parts: [{
-                        text: `You are Manthan's AI Trade Assistant. Your goal is to help users generate shipping documents (Invoice, Packing List, etc.).
+                        text: `You are Manthan AI, an intelligent assistant for the "Manthan" Export-Import platform.
                     
-                    Current Document Context: ${JSON.stringify(currentDocData)}
-
-                    RULES:
-                    1. Be professional and helpful.
-                    2. If the user provides details for the document (like importer name, items, prices), EXTRACT them and include a JSON object at the END of your response in this format:
+                    Your Goal: Assist users with trade finance, logistics, and document generation.
                     
-                    ||JSON||
-                    {
-                        "importer": "...",
-                        "items": [{ "desc": "...", "amount": "..." }]
-                    }
-                    ||JSON||
+                    Current Context: ${currentDocData ? JSON.stringify(currentDocData) : "User is on the dashboard."}
 
-                    3. Only update fields that the user explicitly mentioned. Keep others null or as they are.
-                    4. If the user asks general questions about trade, answer them.
+                    Instructions:
+                    1. Answer queries about Export (FOB, CIF, Letter of Credit), detailed Logistics, and Compliance.
+                    2. If the user asks to create or update a document, confirm the details.
+                    3. If extraction is needed, append a JSON block at the end (as per previous instructions).
+                    4. Keep answers concise (max 3 sentences) unless detailed explanation is asked.
                     `}]
                 },
                 {
                     role: "model",
-                    parts: [{ text: "Hello! I am your AI Trade Assistant. I can help you generate shipping documents instantly. Please let me know what you need." }]
+                    parts: [{ text: "Hello! I am Manthan AI. How can I assist with your shipments or documentation today?" }]
                 }
             ],
             generationConfig: {
-                maxOutputTokens: 1000,
+                maxOutputTokens: 500,
             },
         });
 
